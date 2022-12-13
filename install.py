@@ -15,7 +15,7 @@ def rmdir(dir):
         os.remove('{}/{}'.format(dir,i))
     os.rmdir(dir)
 
-url="https://api.github.com/repos/pavelprosto94/space_clock/git/trees/main?recursive=1"
+url="https://api.github.com/repos/pavelprosto94/christmas_tree_clock/git/trees/main?recursive=1"
 animation_enable = -1
 
 screen = M5Screen()
@@ -36,7 +36,7 @@ if not wifiCfg.wlan_sta.isconnected():
   screen.load_screen(screen0)
 
 if wifiCfg.wlan_sta.isconnected():
-  image0.set_network_img_src("https://raw.githubusercontent.com/pavelprosto94/space_clock/main/resources/install_download.png")
+  image0.set_network_img_src("https://raw.githubusercontent.com/pavelprosto94/christmas_tree_clock/main/resources/install_download.png")
   label0.set_text("Initialization")
   try:
     os.remove('apps/RGB-Color-Pick.py')
@@ -50,7 +50,7 @@ if wifiCfg.wlan_sta.isconnected():
     global animation_enable
     img=[]
     for i in range(0,3):
-      img.append(M5Img("https://raw.githubusercontent.com/pavelprosto94/space_clock/main/resources/install_download_pr_{}.png".format(i), x=128, y=64, parent=None))
+      img.append(M5Img("https://raw.githubusercontent.com/pavelprosto94/christmas_tree_clock/main/resources/install_download_pr_{}.png".format(i), x=128, y=64, parent=None))
     wait(0.1)
     animation_enable = 3
     while animation_enable>-1:
@@ -93,7 +93,7 @@ if wifiCfg.wlan_sta.isconnected():
               ans=mkDir(path)
               if ans!="":
                 label0.set_text("Made path:\n{}".format(path))
-            file_d = urequests.request(method="GET", url="https://raw.githubusercontent.com/pavelprosto94/space_clock/main/{}".format(path), headers={ 'User-Agent': 'M5Stack'})
+            file_d = urequests.request(method="GET", url="https://raw.githubusercontent.com/pavelprosto94/christmas_tree_clock/main/{}".format(path), headers={ 'User-Agent': 'M5Stack'})
             if (path[path.rfind(".")])==".py" or (path[path.rfind(".")])==".txt":
               with open("/flash/"+path, 'w') as f:
                 f.write(file_d.text) 
@@ -106,7 +106,7 @@ if wifiCfg.wlan_sta.isconnected():
   else:
     if installing:
       import deviceCfg
-      fileA = open('/flash/apps/space_clock.py', 'rb')
+      fileA = open('/flash/apps/christmas_tree_clock.py', 'rb')
       fileB = open('/flash/main.py', 'wb')
       fileB.write(fileA.read())
       fileA.close()
