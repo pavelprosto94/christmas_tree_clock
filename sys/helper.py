@@ -78,16 +78,33 @@ def ConfigLoad():
   data['setup'] = []
   MAX_BR, ADAPTIVE_BR, MIN_BR, =100, True, 10  
   UTC_ZONE=3
-  ALARM_WAV='res/fallout.wav'
+  ALARM_WAV='res/bells.wav'
   NOTIFY_WAV, NOTIFY_PERIODIC='res/link.wav', [-1,-1]
   if fileExist('/flash/setup.txt'):
     with open('/flash/setup.txt', 'r') as json_file:
       data = json.load(json_file)
-  MAX_BR=safetyLoadJson(data['setup'],'MAX_BR',MAX_BR)
-  ADAPTIVE_BR=safetyLoadJson(data['setup'],'ADAPTIVE_BR',ADAPTIVE_BR)
-  MIN_BR=safetyLoadJson(data['setup'],'MIN_BR',MIN_BR)
-  UTC_ZONE=safetyLoadJson(data['setup'],'UTC_ZONE',UTC_ZONE)
-  ALARM_WAV=safetyLoadJson(data['setup'],'ALARM_WAV',ALARM_WAV)
-  NOTIFY_WAV=safetyLoadJson(data['setup'],'NOTIFY_WAV',NOTIFY_WAV)
-  NOTIFY_PERIODIC=safetyLoadJson(data['setup'],'NOTIFY_PERIODIC',NOTIFY_PERIODIC)
+    MAX_BR=safetyLoadJson(data['setup'],'MAX_BR',MAX_BR)
+    ADAPTIVE_BR=safetyLoadJson(data['setup'],'ADAPTIVE_BR',ADAPTIVE_BR)
+    MIN_BR=safetyLoadJson(data['setup'],'MIN_BR',MIN_BR)
+    UTC_ZONE=safetyLoadJson(data['setup'],'UTC_ZONE',UTC_ZONE)
+    ALARM_WAV=safetyLoadJson(data['setup'],'ALARM_WAV',ALARM_WAV)
+    NOTIFY_WAV=safetyLoadJson(data['setup'],'NOTIFY_WAV',NOTIFY_WAV)
+    NOTIFY_PERIODIC=safetyLoadJson(data['setup'],'NOTIFY_PERIODIC',NOTIFY_PERIODIC)
   return MAX_BR, ADAPTIVE_BR, MIN_BR, UTC_ZONE, ALARM_WAV, NOTIFY_WAV, NOTIFY_PERIODIC
+
+def saveChristmas(ball_ind):
+  import json
+  data = {}
+  data['tree'] = { 'ball_ind' : ball_ind }
+  with open('/flash/christmas.txt', 'w') as outfile:
+    json.dump(data, outfile)
+
+def loadChristmas():
+  import json
+  data = {}
+  ball_ind = [0]*13
+  if fileExist('/flash/christmas.txt'):
+    with open('/flash/christmas.txt', 'r') as json_file:
+      data = json.load(json_file)
+    ball_ind=safetyLoadJson(data['tree'],'ball_ind',ball_ind)
+  return ball_ind
