@@ -22,6 +22,7 @@ lv.disp_load_scr(rootLoading)
 from uiflow import wait
 wait(0.01)
 import sys, time, random, _thread, gc, os
+from machine import Timer
 gc.collect()
 sys.path.append("/flash/sys")
 title_font,body_font=lv.font_montserrat_18,lv.font_montserrat_14
@@ -76,7 +77,7 @@ def drawButtory():
   image2.set_offset_x(-but_val*40)
 
 def redrawClock():
-  global x, y, xl, yl, balls_edit
+  global x, y, xl, yl, balls_edit, timerAlarm
   while wavFreez:
     wait(0.2)
   balls_edit=False
@@ -98,6 +99,7 @@ def redrawClock():
     image1.set_size(48,28)
     image1.set_src(loadPNG("res/christmas/santa.png"))
     if wavFreez == False: _thread.start_new_thread(playAlarm,())
+    timerAlarm.init(period=1000, mode=Timer.PERIODIC, callback=drawAlarm)
   else:
     label0.set_style_local_text_font(0,0,lv.font_montserrat_48)
     label0.set_pos(180,15)
@@ -116,34 +118,39 @@ def redrawClock():
     image1.set_src(loadPNG("res/christmas/snow.png"))
     image1.set_hidden(False)
 
-def draw05sec():
-  global x, y, xl, yl
-  if alarm_mode>-1:
+timerAlarm=Timer(2)
+drFreez=False
+def drawAlarm(Timer):
+  global x, y, xl, yl, drFreez
+  if alarm_mode>-1 and not drFreez:
+    drFreez=True
     xl,x=xl+1,x+yl
     if xl>7: xl=0
     if x>320: yl,y=-4,random.randint(1, 11)*10
     if x<-48: yl,y=4,random.randint(1, 11)*10
+    image1.set_pos(x,y)
     if yl>0: image1.set_offset_y(-28*int(xl/4))
     else: image1.set_offset_y(-28*(2+int(xl/4)))
     image1.set_offset_x(48*(xl % 4))
-    image1.set_pos(x,y)
-  else:
-    if not balls_edit:
-      x,y=x+random.randint(-1, 1),y+1
-      if y>=320: y=0
-      if x>=320: x=320
-      if x<=-320: x=0
-      image1.set_offset_y(y)
-      image1.set_offset_x(x)
+    drFreez=False
 
 def draw25sec():
-  global but_state
+  global but_state, x, y, xl, yl,drFreez
   label0.set_text(str("{:02d}:{:02d}").format(now[4],now[5]))
   label1.set_text(str("{:02d}-{:02d}-{:04d}").format(now[2],now[1],now[0]))
-  if alarm_mode==-1:
+  if alarm_mode==-1 and not drFreez:
+    drFreez=True
+    if not balls_edit:
+      x,y=x+random.randint(-1, 1),y+1
+      if y>=240: y=0
+      if x==240: x=0
+      elif x<0: x=239
+      image1.set_offset_y(y)
+      image1.set_offset_x(x)
     if (but_state!=power.getChargeState()):
       but_state=power.getChargeState()
       drawButtory()
+    drFreez=False
 
 def draw100sec():
   global br
@@ -157,8 +164,9 @@ def onTouchPressed():
   if alarm_mode>-1:
     touched_pos=touch.read()
     if touched_pos[0]>=x-5 and touched_pos[0]<=x+5+48 and touched_pos[1]>=y-10 and touched_pos[1]<=y+10+28:
-      # vibrating()
       image1.set_hidden(True)
+      vibrating()
+      timerAlarm.deinit()
       label2.set_text("")
       if alarm_mode<len(alarms):
         alarms[alarm_mode][3]=pastMinutesOfYear(now[1],now[2],now[4],now[5])
@@ -249,7 +257,7 @@ try:
           redrawClock()
           fix_update=1
           power.setLCDBrightness(MAX_BR)
-        draw05sec()
+        #draw05sec()
         if not run:
           break
         if fix_update%25==0:
@@ -270,6 +278,7 @@ try:
           touched_time,touched_cord=time.ticks_ms(),touch.read()
           onTouchPressed()
           if br!=MAX_BR:
+            while drFreez: wait(0.1)
             br=MAX_BR
             power.setLCDBrightness(br)
             fix_update=1
@@ -321,9 +330,8 @@ try:
           #  onTouchReleased()
           touched_time=0
     fix_update+=1
-    if balls_edit: wait(0.1)
-    elif alarm_mode>-1: wait(0.2)
-    else: wait(0.5)
+    if balls_edit or alarm_mode>-1: wait(0.05)
+    else: wait(0.4)
 except Exception as e:
   label.set_pos(0,0)
   label.set_text(str(e))
