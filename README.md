@@ -5,7 +5,7 @@ Add yourself a New Year's mood! Decorate your M5Stack with a Christmas tree! #M5
 ![preview](resources/help.jpg)
 
 ## What can they do:
-- Animated space wallpaper with a flying astronaut
+- Animated space wallpaper with a Christmas tree
 - Adaptive backlight mode will set the brightness depending on the time of day (Bright screen during the day and dim at night).
 - Add up to 4 alarm clocks. You can set up a repeat by day of the week.
 - Disable and activate alarms using the alarm clock manager.
