@@ -16,7 +16,7 @@ Add yourself a New Year's mood! Decorate your M5Stack with a Christmas tree! #M5
 - You can enter debug mode directly from the watch menu.
 
 ## Warning
-The M5Stack processor is weak, and drawing snow is a very difficult process for it. Therefore, the firmware may hang. Fixed by rebooting the device.
+The M5Stack processor is weak, and drawing snow is a very difficult process for it. Therefore, the firmware may freeze. Fixed by rebooting the device.
 Please, if you use this firmware version as an alarm clock, set the alarm additionally on another more reliable device.
 
 ## Installation
