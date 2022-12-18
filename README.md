@@ -26,7 +26,7 @@ Please, if you use this firmware version as an alarm clock, set the alarm additi
 - Go to M5Flow (https://flow.m5stack.com /)
 - Specify your "API KEY" and device type "Core2"
 - Switch to Python mode
-- Copy and paste the code to set the clock from the file (https://github.com/pavelprosto94/space_clock/blob/main/install.py )
+- Copy and paste the code to set the clock from the file (https://github.com/pavelprosto94/christmas_tree_clock/blob/main/install.py )
 - Click the Run button
 ![preview](resources/help_1.jpg)
 - Wait for the installation to finish. All necessary files will be copied from the GitHub repository
@@ -43,7 +43,7 @@ A bug may occur, the clock is not drawn, and the Run button is lit blue. Don't w
 - Go to M5Flow (https://flow.m5stack.com /)
 - Specify your "API KEY" and device type "Core2"
 - Switch to Python mode
-- Copy and paste **New install** code from the file (https://github.com/pavelprosto94/space_clock/blob/main/install.py )
+- Copy and paste **New install** code from the file (https://github.com/pavelprosto94/christmas_tree_clock/blob/main/install.py )
 - Click the Run button
 ![preview](resources/help_1.jpg)
 - Wait for the installation to finish. All necessary files will be copied from the GitHub repository
