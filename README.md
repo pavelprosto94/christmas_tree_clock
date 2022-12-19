@@ -50,6 +50,9 @@ A bug may occur, the clock is not drawn, and the Run button is lit blue. Don't w
 - After restart the device
 - Select App > space_clock.py > Run
 
+## Materials used
+The background of this watch was created based on a 3D model from Maksat ["Stylized Christmas Tree"](https://sketchfab.com/3d-models/stylised-christmas-tree-6b973796c0774c559c41b07d99ee26b6)
+
 ## You can support me too.
 I accept donation via [Webmoney](https://www.wmtransfer.com/).<br />
 My Webmoney(WMZ) wallet: **Z803753663501** <br />
